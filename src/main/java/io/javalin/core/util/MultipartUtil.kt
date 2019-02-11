@@ -7,7 +7,6 @@
 package io.javalin.core.util
 
 import io.javalin.UploadedFile
-import java.io.ByteArrayInputStream
 import java.nio.charset.Charset
 import javax.servlet.MultipartConfigElement
 import javax.servlet.http.HttpServletRequest
@@ -20,7 +19,7 @@ object MultipartUtil {
         return servletRequest.parts.filter { isFile(it) && it.name == partName }.map { filePart ->
             UploadedFile(
                     contentType = filePart.contentType,
-                    content = ByteArrayInputStream(filePart.inputStream.readBytes()),
+                    content = filePart.inputStream,
                     name = filePart.submittedFileName,
                     extension = filePart.submittedFileName.replaceBeforeLast(".", "")
             )
